@@ -1,0 +1,26 @@
+{
+  "name": "puja-commerce",
+  "private": true,
+  "scripts": {
+    "dev": "bash scripts/dev.sh",
+    "dev:all": "turbo dev",
+    "dev:admin": "pnpm --filter @puja/admin dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "db:generate": "turbo db:generate",
+    "db:migrate": "turbo db:migrate",
+    "db:studio": "pnpm --filter @puja/db db:studio",
+    "images:generate": "node scripts/generate-product-images.mjs",
+    "rooms:generate": "node scripts/generate-room-scenes.mjs"
+  },
+  "devDependencies": {
+    "@next/swc-darwin-arm64": "15.5.24",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.2"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20 <23"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@puja/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000 --hostname 127.0.0.1",
+    "dev:clean": "rm -rf .next && next dev --port 3000 --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@puja/catalog": "workspace:*",
+    "@puja/config": "workspace:*",
+    "@puja/types": "workspace:*",
+    "@puja/ui": "workspace:*",
+    "framer-motion": "^13.1.1",
+    "lucide-react": "^1.38.0",
+    "next": "^15.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@next/swc-darwin-arm64": "15.5.24",
+    "@tailwindcss/postcss": "^4.0.9",
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/three": "^0.185.4",
+    "tailwindcss": "^4.0.9",
+    "typescript": "^5.8.2"
+  }
+}

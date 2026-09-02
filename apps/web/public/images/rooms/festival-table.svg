@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="wall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAF7F2"/>
+      <stop offset="100%" style="stop-color:#F0EBE3"/>
+    </linearGradient>
+    <radialGradient id="warmLight" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" style="stop-color:#FFE4B5;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#FAF7F2;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="800" height="600" fill="#FFF8F0"/>
+  <rect width="800" height="600" fill="url(#warmLight)"/>
+  <!-- Festive maroon backdrop -->
+  <rect x="0" y="0" width="800" height="200" fill="#6B2D2D" opacity="0.12"/>
+  <!-- Rangoli hint -->
+  <circle cx="400" cy="480" r="60" fill="none" stroke="#E8841A" stroke-width="1" opacity="0.2"/>
+  <circle cx="400" cy="480" r="40" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.15"/>
+  <!-- Festival table -->
+  <rect x="120" y="280" width="560" height="20" rx="2" fill="#8B6914" opacity="0.3"/>
+  <rect x="100" y="300" width="600" height="140" rx="6" fill="#C4A265" opacity="0.12"/>
+  <!-- Cloth drape -->
+  <path d="M100 300 Q400 280 700 300" fill="none" stroke="#E8841A" stroke-width="2" opacity="0.2"/>
+  <!-- Diya row hints -->
+  <ellipse cx="250" cy="295" rx="15" ry="5" fill="#FF9933" opacity="0.15"/>
+  <ellipse cx="550" cy="295" rx="15" ry="5" fill="#FF9933" opacity="0.15"/>
+  <!-- Center placement -->
+  <ellipse cx="400" cy="290" rx="90" ry="18" fill="#FFD700" opacity="0.08"/>
+  <!-- String lights -->
+  <path d="M80 80 Q200 120 400 90 Q600 60 720 100" fill="none" stroke="#FFD700" stroke-width="1.5" opacity="0.25"/>
+  
+  <text x="400" y="580" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#8B6914" opacity="0.5">Festival Table</text>
+</svg>

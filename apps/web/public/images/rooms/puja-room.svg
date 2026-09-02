@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="wall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAF7F2"/>
+      <stop offset="100%" style="stop-color:#F0EBE3"/>
+    </linearGradient>
+    <radialGradient id="warmLight" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" style="stop-color:#FFE4B5;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#FAF7F2;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="800" height="600" fill="url(#wall)"/>
+  <rect width="800" height="600" fill="url(#warmLight)"/>
+  <!-- Maroon accent wall -->
+  <rect x="0" y="0" width="800" height="280" fill="#6B2D2D" opacity="0.15"/>
+  <!-- Floor -->
+  <rect x="0" y="420" width="800" height="180" fill="#E8D5B5" opacity="0.5"/>
+  <line x1="0" y1="420" x2="800" y2="420" stroke="#C4A265" stroke-width="2" opacity="0.3"/>
+  <!-- Puja platform / chowki -->
+  <rect x="200" y="380" width="400" height="45" rx="4" fill="#8B6914" opacity="0.25"/>
+  <rect x="220" y="365" width="360" height="20" rx="2" fill="#C4A265" opacity="0.2"/>
+  <!-- Mandir arch frame -->
+  <path d="M280 120 Q400 40 520 120 L520 380 L280 380 Z" fill="none" stroke="#C4A265" stroke-width="3" opacity="0.4"/>
+  <path d="M300 140 Q400 80 500 140" fill="none" stroke="#E8841A" stroke-width="1.5" opacity="0.3"/>
+  <!-- Shelf -->
+  <rect x="250" y="200" width="300" height="8" fill="#8B6914" opacity="0.35"/>
+  <rect x="250" y="280" width="300" height="8" fill="#8B6914" opacity="0.35"/>
+  <!-- Diya glow spots -->
+  <ellipse cx="400" cy="350" rx="80" ry="15" fill="#FF9933" opacity="0.08"/>
+  <!-- Decorative toran -->
+  <path d="M150 100 Q400 60 650 100" fill="none" stroke="#E8841A" stroke-width="2" opacity="0.25"/>
+  <circle cx="400" cy="75" r="8" fill="#FFD700" opacity="0.3"/>
+  
+  <text x="400" y="580" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#8B6914" opacity="0.5">Puja Room</text>
+</svg>
