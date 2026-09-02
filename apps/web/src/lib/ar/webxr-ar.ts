@@ -108,20 +108,22 @@ export async function startWebXRAR(
 
     if (!hitTestSourceRequested) {
       hitTestSourceRequested = true;
-      const activeSession = session;
-      activeSession.requestReferenceSpace("viewer").then((viewerSpace) => {
-        const requestHitTestSource = activeSession.requestHitTestSource?.bind(
-          activeSession,
-        );
-        if (!requestHitTestSource) {
+      if (!session) return;
+      const activeSession: XRSession = session;
+      void activeSession.requestReferenceSpace("viewer").then(async (viewerSpace) => {
+        const requestHitTestSource = activeSession.requestHitTestSource;
+        if (typeof requestHitTestSource !== "function") {
           onError?.("Hit testing not supported");
           return;
         }
-        requestHitTestSource({ space: viewerSpace })
-          .then((source) => {
-            hitTestSource = source;
-          })
-          .catch(() => onError?.("Could not start surface detection"));
+        try {
+          hitTestSource =
+            (await requestHitTestSource.call(activeSession, {
+              space: viewerSpace,
+            })) ?? null;
+        } catch {
+          onError?.("Could not start surface detection");
+        }
       });
     }
 
