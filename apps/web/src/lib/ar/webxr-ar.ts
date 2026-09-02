@@ -110,13 +110,14 @@ export async function startWebXRAR(
       hitTestSourceRequested = true;
       const activeSession = session;
       activeSession.requestReferenceSpace("viewer").then((viewerSpace) => {
-        const requestHitTestSource = activeSession.requestHitTestSource;
+        const requestHitTestSource = activeSession.requestHitTestSource?.bind(
+          activeSession,
+        );
         if (!requestHitTestSource) {
           onError?.("Hit testing not supported");
           return;
         }
-        requestHitTestSource
-          .call(activeSession, { space: viewerSpace })
+        requestHitTestSource({ space: viewerSpace })
           .then((source) => {
             hitTestSource = source;
           })
