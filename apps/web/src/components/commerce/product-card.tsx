@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, ShoppingBag } from "lucide-react";
-import { motion } from "framer-motion";
 import { buildLocalizedPath } from "@puja/config";
 import type { CatalogProduct } from "@puja/catalog";
 import type { CountryConfig } from "@puja/types";
@@ -35,59 +34,51 @@ export function ProductCard({ product, country }: ProductCardProps) {
   const imageUrl = getProductImage(product.slug, product.categorySlugs ?? []);
 
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="h-full"
+    <Link
+      href={href}
+      className="group flex h-full flex-col ornate-card transition-[box-shadow,transform] duration-[var(--duration-medium)] ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:shadow-md hover:shadow-brown/5 motion-reduce:transform-none"
     >
-      <Link href={href} className="group flex flex-col h-full ornate-card hover:-translate-y-0 transition-all duration-300">
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-cream to-ivory-dark/30">
-          {/* Corner temple motif */}
-          <span className="absolute top-2 left-2 text-gold/40 text-xs z-10" aria-hidden>✦</span>
-          <span className="absolute top-2 right-2 text-gold/40 text-xs z-10" aria-hidden>✦</span>
+      <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-cream to-ivory-dark/30">
+        <Image
+          src={imageUrl}
+          alt={product.name}
+          fill
+          className="object-contain p-4 transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out-expo)] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          unoptimized={imageUrl.endsWith(".svg")}
+        />
 
-          <Image
-            src={imageUrl}
-            alt={product.name}
-            fill
-            className="object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            unoptimized={imageUrl.endsWith(".svg")}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-brown/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {!product.inStock && (
-            <span className="absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-maroon/90 text-cream backdrop-blur-sm">
-              Out of stock
-            </span>
-          )}
-
-          <span className="absolute top-3 right-3 w-10 h-10 rounded-full bg-gradient-to-br from-saffron/90 to-gold text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-lg shadow-saffron/30">
-            <ShoppingBag className="w-4 h-4" />
+        {!product.inStock && (
+          <span className="absolute top-3 left-3 rounded bg-maroon/90 px-2.5 py-1 text-xs font-semibold text-cream backdrop-blur-sm">
+            Out of stock
           </span>
-        </div>
+        )}
 
-        <div className="flex flex-col flex-1 p-4 gap-2 border-t border-gold/10">
-          {product.indianName && (
-            <p className="text-xs text-gold font-devanagari line-clamp-1">{product.indianName}</p>
-          )}
-          <h3 className="text-sm font-medium text-brown line-clamp-2 group-hover:text-saffron transition-colors leading-snug font-display">
-            {product.name}
-          </h3>
+        <span className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-temple/90 text-cream opacity-0 shadow-md transition-[opacity,transform] duration-[var(--duration-medium)] ease-[var(--ease-out-expo)] group-hover:opacity-100 motion-reduce:transition-none">
+          <ShoppingBag className="h-4 w-4" />
+        </span>
+      </div>
 
-          {price && <PriceDisplay price={price} country={country} size="sm" />}
+      <div className="flex flex-1 flex-col gap-2 border-t border-gold/10 p-4">
+        {product.indianName && (
+          <p className="line-clamp-1 font-devanagari text-xs text-gold">{product.indianName}</p>
+        )}
+        <h3 className="line-clamp-2 font-display text-sm font-medium leading-snug text-brown transition-colors duration-[var(--duration-fast)] group-hover:text-saffron">
+          {product.name}
+        </h3>
 
-          {product.rating > 0 && (
-            <p className="text-xs text-brown-light mt-auto flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 fill-saffron text-saffron" />
-              {product.rating.toFixed(1)}
-              {product.reviewCount > 0 && (
-                <span className="text-brown-light/60">({product.reviewCount})</span>
-              )}
-            </p>
-          )}
-        </div>
-      </Link>
-    </motion.div>
+        {price && <PriceDisplay price={price} country={country} size="sm" />}
+
+        {product.rating > 0 && (
+          <p className="mt-auto flex items-center gap-1 text-xs text-brown-light">
+            <Star className="h-3.5 w-3.5 fill-saffron text-saffron" />
+            {product.rating.toFixed(1)}
+            {product.reviewCount > 0 && (
+              <span className="text-brown-light/60">({product.reviewCount})</span>
+            )}
+          </p>
+        )}
+      </div>
+    </Link>
   );
 }

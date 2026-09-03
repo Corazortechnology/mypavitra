@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_Devanagari, Cormorant_Garamond } from "next/font/google";
+import "@fontsource-variable/dm-sans/wght.css";
+import "@fontsource/instrument-serif/400.css";
 import { BRAND } from "@puja/config";
 import { getCountryConfig } from "@/lib/country";
 import { buildPageMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
@@ -7,25 +8,6 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ExperienceRoot } from "@/components/experience/experience-root";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const notoDevanagari = Noto_Sans_Devanagari({
-  subsets: ["devanagari"],
-  variable: "--font-noto-devanagari",
-  display: "swap",
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const country = await getCountryConfig();
@@ -52,9 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
       </head>
-      <body
-        className={`${inter.variable} ${cormorant.variable} ${notoDevanagari.variable} min-h-screen flex flex-col`}
-      >
+      <body className="min-h-screen flex flex-col">
         <ExperienceRoot>
           <Header country={country} />
           <main className="flex-1">{children}</main>

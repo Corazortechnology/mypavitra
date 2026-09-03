@@ -7,8 +7,8 @@ interface TempleArchFrameProps {
 export function TempleArchFrame({ children, className = "" }: TempleArchFrameProps) {
   return (
     <div className={`relative ${className}`}>
-      {/* Outer glow ring */}
-      <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-saffron/30 via-gold/20 to-maroon/20 blur-xl opacity-70 animate-glow" />
+      {/* Soft outer ring — static, no pulse */}
+      <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-saffron/20 via-gold/15 to-maroon/15 blur-xl opacity-50" />
 
       {/* Gold ornamental border */}
       <div className="relative p-[3px] rounded-[1.75rem] bg-gradient-to-br from-gold via-saffron-light to-gold shadow-2xl shadow-saffron/20">

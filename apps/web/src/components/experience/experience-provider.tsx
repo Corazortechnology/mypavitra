@@ -69,9 +69,9 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const celebrateOrder = useCallback(() => {
-    triggerFlowerRain();
+    // Sound only — petal rain removed from the motion language
     playSuccess();
-  }, [playSuccess, triggerFlowerRain]);
+  }, [playSuccess]);
 
   const value = useMemo(
     () => ({

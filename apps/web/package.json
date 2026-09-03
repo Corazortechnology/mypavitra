@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
     "@puja/catalog": "workspace:*",
     "@puja/config": "workspace:*",
     "@puja/types": "workspace:*",

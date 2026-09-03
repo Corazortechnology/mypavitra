@@ -87,7 +87,7 @@ export function MobileNav({ country }: MobileNavProps) {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 320 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
               className="fixed top-0 right-0 bottom-0 w-[min(100vw,320px)] bg-cream z-50 shadow-2xl flex flex-col"
             >
               <div className="flex items-center justify-between p-4 border-b border-ivory-dark">
@@ -214,20 +214,19 @@ export function AnnouncementBar({ country }: { country: CountryConfig }) {
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-brown via-maroon to-brown text-white text-center text-xs sm:text-sm py-2.5 px-4">
       <div className="absolute inset-0 bg-spiritual-pattern opacity-30" aria-hidden />
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-1"
-      >
-        <span className="inline-flex items-center gap-1.5 animate-diya-flicker">
-          <span className="text-saffron-light">🪔</span>
+      <p className="relative flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+        <span className="inline-flex items-center gap-1.5">
           Free delivery above {threshold}
         </span>
-        <span className="hidden sm:inline text-white/40">✦</span>
+        <span className="hidden text-white/40 sm:inline" aria-hidden>
+          ·
+        </span>
         <span className="font-devanagari text-saffron-light/90">शुद्ध · प्रामाणिक</span>
-        <span className="hidden sm:inline text-white/40">✦</span>
+        <span className="hidden text-white/40 sm:inline" aria-hidden>
+          ·
+        </span>
         <span className="hidden sm:inline">Ships worldwide</span>
-      </motion.p>
+      </p>
     </div>
   );
 }

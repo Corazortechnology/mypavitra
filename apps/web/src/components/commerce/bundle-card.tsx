@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Package, ArrowRight } from "lucide-react";
 import { buildLocalizedPath, formatPrice } from "@puja/config";
 import type { CatalogBundle } from "@puja/catalog";
@@ -30,52 +29,53 @@ export function BundleCard({ bundle, country }: BundleCardProps) {
       : null;
 
   return (
-    <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} className="h-full">
-      <Link href={href} className="group flex flex-col h-full ornate-card overflow-hidden transition-all duration-300">
-        <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-cream to-ivory-dark/20">
-          <Image
-            src={imageUrl}
-            alt={bundle.name}
-            fill
-            className="object-contain p-4 group-hover:scale-105 transition-transform duration-700"
-            sizes="(max-width: 1024px) 50vw, 25vw"
-            unoptimized={imageUrl.endsWith(".svg")}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-brown/70 via-brown/15 to-transparent" />
-          {savingsPercent !== null && savingsPercent > 0 && (
-            <span className="absolute top-3 right-3 text-xs font-bold px-3 py-1.5 rounded-full bg-gradient-to-r from-saffron to-gold text-white shadow-lg ring-1 ring-gold/30">
-              Save {savingsPercent}%
-            </span>
-          )}
-          <div className="absolute bottom-3 left-3 flex items-center gap-2 text-cream text-sm font-medium">
-            <Package className="w-4 h-4 text-saffron-light" />
-            {itemCount} items
-          </div>
+    <Link
+      href={href}
+      className="group flex h-full flex-col overflow-hidden ornate-card transition-[box-shadow,transform] duration-[var(--duration-medium)] ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:shadow-md hover:shadow-brown/5 motion-reduce:transform-none"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-cream to-ivory-dark/20">
+        <Image
+          src={imageUrl}
+          alt={bundle.name}
+          fill
+          className="object-contain p-4 transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out-expo)] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          sizes="(max-width: 1024px) 50vw, 25vw"
+          unoptimized={imageUrl.endsWith(".svg")}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brown/70 via-brown/15 to-transparent" />
+        {savingsPercent !== null && savingsPercent > 0 && (
+          <span className="absolute top-3 right-3 rounded bg-brass px-3 py-1.5 text-xs font-semibold text-white">
+            Save {savingsPercent}%
+          </span>
+        )}
+        <div className="absolute bottom-3 left-3 flex items-center gap-2 text-sm font-medium text-cream">
+          <Package className="h-4 w-4 text-gold-light" />
+          {itemCount} items
         </div>
+      </div>
 
-        <div className="flex flex-col flex-1 p-5 gap-2 border-t border-gold/10">
-          <h3 className="font-display text-lg text-brown group-hover:text-saffron transition-colors">
-            {bundle.name}
-          </h3>
-          <p className="text-sm text-brown-light line-clamp-2 flex-1">{bundle.description}</p>
+      <div className="flex flex-1 flex-col gap-2 border-t border-gold/10 p-5">
+        <h3 className="font-display text-lg text-brown transition-colors duration-[var(--duration-fast)] group-hover:text-saffron">
+          {bundle.name}
+        </h3>
+        <p className="line-clamp-2 flex-1 text-sm text-brown-light">{bundle.description}</p>
 
-          {pricing && (
-            <div className="pt-3 flex items-center justify-between border-t border-gold/10">
-              <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="text-lg font-semibold text-brown">
-                  {formatPrice(pricing.bundle, country.currency)}
+        {pricing && (
+          <div className="flex items-center justify-between border-t border-gold/10 pt-3">
+            <div className="flex flex-wrap items-baseline gap-x-2">
+              <span className="text-lg font-semibold text-brown">
+                {formatPrice(pricing.bundle, country.currency)}
+              </span>
+              {pricing.individual > pricing.bundle && (
+                <span className="text-sm text-brown-light line-through">
+                  {formatPrice(pricing.individual, country.currency)}
                 </span>
-                {pricing.individual > pricing.bundle && (
-                  <span className="text-sm text-brown-light line-through">
-                    {formatPrice(pricing.individual, country.currency)}
-                  </span>
-                )}
-              </div>
-              <ArrowRight className="w-5 h-5 text-saffron opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              )}
             </div>
-          )}
-        </div>
-      </Link>
-    </motion.div>
+            <ArrowRight className="h-5 w-5 text-saffron opacity-0 transition-[opacity,transform] duration-[var(--duration-medium)] group-hover:translate-x-0.5 group-hover:opacity-100" />
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }

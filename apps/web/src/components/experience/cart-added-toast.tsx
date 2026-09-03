@@ -1,26 +1,25 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
+import { duration, ease } from "@/lib/motion";
 
 export function CartAddedToast({ show, message }: { show: boolean; message?: string }) {
+  const reduced = useReducedMotion();
+
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] px-5 py-3 rounded-xl bg-gradient-to-r from-brown to-maroon text-cream shadow-2xl shadow-brown/30 ring-1 ring-gold/30 flex items-center gap-3"
+          initial={reduced ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: duration.medium, ease: ease.out }}
+          className="fixed bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-lg bg-temple px-5 py-3 text-cream shadow-lg ring-1 ring-brass/25"
           role="status"
         >
-          <span className="text-xl animate-diya-flicker">🪔</span>
-          <div>
-            <p className="text-sm font-medium">{message ?? "Added to your puja cart"}</p>
-            <p className="text-xs text-cream/70 font-devanagari">शुभम्</p>
-          </div>
-          <ShoppingBag className="w-4 h-4 text-saffron-light ml-1" />
+          <ShoppingBag className="h-4 w-4 text-brass" aria-hidden />
+          <p className="text-sm font-medium">{message ?? "Added to cart"}</p>
         </motion.div>
       )}
     </AnimatePresence>

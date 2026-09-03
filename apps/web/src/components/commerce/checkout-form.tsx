@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import {
   CreditCard,
   Lock,
@@ -432,30 +431,27 @@ export function CheckoutForm({
           </fieldset>
 
           {error && (
-            <motion.p
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3"
+            <p
+              className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600"
               role="alert"
             >
               {error}
-            </motion.p>
+            </p>
           )}
 
-          <motion.button
+          <button
             type="submit"
             disabled={loading}
-            whileTap={{ scale: 0.98 }}
-            className="btn-shine w-full py-4 rounded-xl bg-gradient-to-r from-saffron via-saffron-light to-gold text-white font-semibold text-base shadow-xl shadow-saffron/25 hover:shadow-2xl disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 ring-2 ring-gold/20"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-saffron py-4 text-base font-semibold text-white shadow-md transition-[background-color,transform] duration-[var(--duration-fast)] hover:bg-saffron-light active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:active:scale-100"
           >
             {loading ? (
-              <>🪔 Opening secure payment…</>
+              <>Opening secure payment…</>
             ) : isIndia ? (
               <>Pay {formatPrice(total, country.currency)} with Razorpay</>
             ) : (
               <>Place order — {formatPrice(total, country.currency)}</>
             )}
-          </motion.button>
+          </button>
         </form>
 
         <aside className="lg:col-span-2">

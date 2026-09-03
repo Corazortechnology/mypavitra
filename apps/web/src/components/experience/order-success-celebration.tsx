@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { buildLocalizedPath } from "@puja/config";
 import type { CountryConfig } from "@puja/types";
 import { Button } from "@puja/ui";
 import { TempleBackground } from "@/components/ui/temple-background";
+import { duration, ease } from "@/lib/motion";
 import { useExperience } from "./experience-provider";
 
 interface OrderSuccessCelebrationProps {
@@ -16,6 +17,7 @@ interface OrderSuccessCelebrationProps {
 
 export function OrderSuccessCelebration({ order, country }: OrderSuccessCelebrationProps) {
   const { celebrateOrder } = useExperience();
+  const reduced = useReducedMotion();
   const prefix = (path: string) => buildLocalizedPath(path, country);
 
   useEffect(() => {
@@ -26,84 +28,75 @@ export function OrderSuccessCelebration({ order, country }: OrderSuccessCelebrat
     celebrateOrder();
   }, [order, celebrateOrder]);
 
+  const enter = reduced
+    ? undefined
+    : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+      };
+
   return (
-    <div className="relative min-h-[70vh] flex items-center overflow-hidden">
+    <div className="relative flex min-h-[70vh] items-center overflow-hidden">
       <TempleBackground variant="hero" className="opacity-40" />
 
-      <div className="container-main relative z-10 py-16 max-w-xl mx-auto text-center">
+      <div className="container-main relative z-10 mx-auto max-w-xl py-16 text-center">
+        <motion.div
+          {...(enter ?? {})}
+          transition={{ duration: duration.slow, ease: ease.out, delay: 0.05 }}
+          className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-brass/90 text-4xl text-cream shadow-lg"
+        >
+          🙏
+        </motion.div>
+
+        <motion.p
+          {...(enter ?? {})}
+          transition={{ duration: duration.slow, ease: ease.out, delay: 0.12 }}
+          className="mt-8 font-devanagari text-lg tracking-widest text-saffron"
+        >
+          शुभम् · आशीर्वाद स्वीकार करें
+        </motion.p>
+
+        <motion.h1
+          {...(enter ?? {})}
+          transition={{ duration: duration.slow, ease: ease.out, delay: 0.2 }}
+          className="mt-3 font-display text-3xl text-brown sm:text-4xl"
+        >
+          Your order is confirmed
+        </motion.h1>
+
+        <motion.p
+          {...(enter ?? {})}
+          transition={{ duration: duration.medium, ease: ease.out, delay: 0.28 }}
+          className="mt-4 leading-relaxed text-brown-light"
+        >
+          Your puja essentials are on their way. May they bring peace and devotion to your home.
+        </motion.p>
+
+        {order && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-            className="inline-flex w-24 h-24 rounded-full bg-gradient-to-br from-saffron to-gold items-center justify-center text-5xl shadow-2xl shadow-saffron/40 ring-4 ring-gold/30"
+            {...(enter ?? {})}
+            transition={{ duration: duration.medium, ease: ease.out, delay: 0.36 }}
+            className="mt-8 inline-block rounded-lg px-6 py-3 ornate-card"
           >
-            🙏
+            <p className="text-xs uppercase tracking-wider text-brown-light">Order number</p>
+            <p className="mt-1 font-mono text-lg font-semibold text-brown">{order}</p>
           </motion.div>
+        )}
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="font-devanagari text-saffron text-lg mt-8 tracking-widest"
-          >
-            शुभम् · आशीर्वाद स्वीकार करें
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="font-display text-3xl sm:text-4xl text-brown mt-3"
-          >
-            Your order is blessed!
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
-            className="mt-4 text-brown-light leading-relaxed"
-          >
-            Your puja essentials are on their way. May they bring peace, prosperity, and devotion
-            to your home.
-          </motion.p>
-
-          {order && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, type: "spring" }}
-              className="mt-8 inline-block px-6 py-3 rounded-xl ornate-card"
-            >
-              <p className="text-xs text-brown-light uppercase tracking-wider">Order number</p>
-              <p className="font-mono font-semibold text-brown text-lg mt-1">{order}</p>
-            </motion.div>
-          )}
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-6 text-sm text-brown-light"
-          >
-            Confirmation email sent with full details.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-            className="mt-10 flex flex-col sm:flex-row gap-3 justify-center"
-          >
-            <Link href={prefix("/categories")}>
-              <Button size="lg">Continue Shopping</Button>
-            </Link>
-            <Link href={prefix("/")}>
-              <Button variant="outline" size="lg">
-                Back to Home
-              </Button>
-            </Link>
-          </motion.div>
+        <motion.div
+          {...(enter ?? {})}
+          transition={{ duration: duration.medium, ease: ease.out, delay: 0.44 }}
+          className="mt-10 flex flex-col justify-center gap-3 sm:flex-row"
+        >
+          <Link href={prefix("/categories")}>
+            <Button size="lg">Continue Shopping</Button>
+          </Link>
+          <Link href={prefix("/")}>
+            <Button variant="outline" size="lg">
+              Back to Home
+            </Button>
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

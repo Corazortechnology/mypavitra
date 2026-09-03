@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { getProductImage } from "@/lib/images";
 
 interface ProductGalleryProps {
@@ -22,11 +19,7 @@ export function ProductGallery({
   const mainImage = getProductImage(slug, categorySlugs);
 
   return (
-    <motion.div
-      initial={{ opacity: 0.8 }}
-      animate={{ opacity: 1 }}
-      className="relative aspect-square rounded-2xl overflow-hidden ring-1 ring-gold/20 shadow-lg shadow-brown/10 bg-cream"
-    >
+    <div className="relative aspect-square overflow-hidden rounded-xl bg-cream ring-1 ring-gold/15 shadow-sm">
       <Image
         src={mainImage}
         alt={name}
@@ -37,12 +30,12 @@ export function ProductGallery({
         unoptimized={mainImage.endsWith(".svg")}
       />
       <div
-        className="absolute bottom-4 right-4 w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg"
+        className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full text-2xl shadow-md"
         style={{ backgroundColor: imageColor }}
         aria-hidden
       >
         {imageEmoji}
       </div>
-    </motion.div>
+    </div>
   );
 }

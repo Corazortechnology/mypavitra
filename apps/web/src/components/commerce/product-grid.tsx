@@ -1,8 +1,5 @@
-"use client";
-
 import type { CountryConfig } from "@puja/types";
 import { ProductCard, type ProductCardProduct } from "./product-card";
-import { StaggerGrid, StaggerItem } from "@/components/motion/fade-in";
 
 interface ProductGridProps {
   products: ProductCardProduct[];
@@ -17,6 +14,7 @@ const columnClasses = {
   4: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
 } as const;
 
+/** Stillness by default — cards use CSS hover, not entrance cascades */
 export function ProductGrid({
   products,
   country,
@@ -25,17 +23,15 @@ export function ProductGrid({
 }: ProductGridProps) {
   if (products.length === 0) {
     return (
-      <p className="text-center text-brown-light py-12">No products found.</p>
+      <p className="py-12 text-center text-brown-light">No products found.</p>
     );
   }
 
   return (
-    <StaggerGrid className={`grid ${columnClasses[columns]} gap-4 md:gap-6 ${className}`}>
+    <div className={`grid ${columnClasses[columns]} gap-4 md:gap-6 ${className}`}>
       {products.map((product) => (
-        <StaggerItem key={product.slug}>
-          <ProductCard product={product} country={country} />
-        </StaggerItem>
+        <ProductCard key={product.slug} product={product} country={country} />
       ))}
-    </StaggerGrid>
+    </div>
   );
 }

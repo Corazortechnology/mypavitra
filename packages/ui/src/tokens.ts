@@ -1,27 +1,58 @@
 export const colors = {
-  ivory: "#FAF7F2",
-  ivoryDark: "#F0EBE3",
-  saffron: "#E8841A",
-  saffronLight: "#F5A623",
-  gold: "#C4A265",
-  goldMuted: "#B8956A",
-  brown: "#3D2914",
-  brownLight: "#5C4033",
+  ivory: "#F6F1E8",
+  sand: "#E9E0D2",
+  ivoryDark: "#E9E0D2",
+  charcoal: "#1C1A17",
+  muted: "#6F685E",
+  brass: "#B08D57",
+  saffron: "#C87533",
+  saffronLight: "#D4894A",
+  saffronGlow: "#C87533",
+  gold: "#B08D57",
+  goldMuted: "#9A7A4C",
+  goldLight: "#D4C0A0",
+  brown: "#1C1A17",
+  brownLight: "#3A2921",
+  temple: "#3A2921",
+  copper: "#A15C3A",
+  maroon: "#3A2921",
+  cream: "#F6F1E8",
   white: "#FFFFFF",
   gray100: "#F5F5F5",
   gray200: "#E8E8E8",
-  gray500: "#737373",
-  gray700: "#404040",
+  gray500: "#6F685E",
+  gray700: "#3A2921",
   success: "#2D6A4F",
   error: "#C1292E",
 } as const;
 
 export const fonts = {
-  sans: "var(--font-inter), system-ui, sans-serif",
+  sans: '"DM Sans Variable", "DM Sans", system-ui, sans-serif',
+  display: '"Instrument Serif", Georgia, serif',
   devanagari: "var(--font-noto-devanagari), 'Noto Sans Devanagari', sans-serif",
 } as const;
 
 export const spacing = {
-  section: "4rem",
+  section: "6rem",
+  sectionLg: "8rem",
   container: "1280px",
+} as const;
+
+export const motion = {
+  duration: {
+    fast: "180ms",
+    base: "320ms",
+    slow: "700ms",
+    cinematic: "1100ms",
+  },
+  ease: {
+    out: "cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+} as const;
+
+export const radii = {
+  none: "0",
+  sm: "4px",
+  md: "8px",
+  lg: "12px",
 } as const;

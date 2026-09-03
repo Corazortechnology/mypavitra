@@ -49,7 +49,7 @@ export default async function HomePage() {
       {bestSellers.length > 0 && (
         <TempleSection variant="subtle" className="py-14 sm:py-16">
           <div className="container-main">
-            <FadeIn className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
+            <FadeIn direction="up" className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
               <SectionHeading
                 title="Best Sellers"
                 subtitle="Most loved by devotees across India and abroad"
@@ -68,7 +68,7 @@ export default async function HomePage() {
 
       <TempleSection variant="section" className="py-14 sm:py-16 border-y border-gold/10">
         <div className="container-main">
-          <FadeIn className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
+          <FadeIn direction="up" className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
             <SectionHeading
               title="Featured Puja Kits"
               subtitle="Complete sets — save time, money, and effort"
@@ -93,26 +93,25 @@ export default async function HomePage() {
       {featuredGuides.length > 0 && (
         <TempleSection variant="subtle" className="py-14 sm:py-16">
           <div className="container-main">
-            <FadeIn className="mb-8">
+            <FadeIn direction="up" className="mb-8">
               <SectionHeading
                 title="Puja Guides"
                 subtitle="Learn what you need and how to use it — written for families in India and abroad"
               />
             </FadeIn>
             <div className="grid sm:grid-cols-3 gap-4">
-              {featuredGuides.map((guide, i) => (
-                <FadeIn key={guide.slug} delay={i * 0.08}>
-                  <Link
-                    href={prefix(`/guides/${guide.slug}`)}
-                    className="group block p-6 ornate-card hover:ring-1 hover:ring-saffron/30 transition-all duration-300 h-full"
-                  >
-                    <BookOpen className="w-8 h-8 text-saffron/80 mb-3 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-display text-lg text-brown group-hover:text-saffron transition-colors line-clamp-2">
-                      {guide.title}
-                    </h3>
-                    <p className="text-sm text-brown-light mt-2 line-clamp-2">{guide.excerpt}</p>
-                  </Link>
-                </FadeIn>
+              {featuredGuides.map((guide) => (
+                <Link
+                  key={guide.slug}
+                  href={prefix(`/guides/${guide.slug}`)}
+                  className="group block h-full p-6 ornate-card transition-[box-shadow,transform] duration-[var(--duration-medium)] ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:shadow-md hover:shadow-brown/5 motion-reduce:transform-none"
+                >
+                  <BookOpen className="mb-3 h-8 w-8 text-saffron/80 transition-transform duration-[var(--duration-fast)] group-hover:translate-x-0.5" />
+                  <h3 className="line-clamp-2 font-display text-lg text-brown transition-colors duration-[var(--duration-fast)] group-hover:text-saffron">
+                    {guide.title}
+                  </h3>
+                  <p className="mt-2 line-clamp-2 text-sm text-brown-light">{guide.excerpt}</p>
+                </Link>
               ))}
             </div>
           </div>

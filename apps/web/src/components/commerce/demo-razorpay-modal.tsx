@@ -74,7 +74,7 @@ export function DemoRazorpayModal({
             initial={{ opacity: 0, scale: 0.92, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            transition={{ type: "spring", damping: 28, stiffness: 320 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(100vw-2rem,420px)] z-[111] rounded-2xl overflow-hidden shadow-2xl"
             role="dialog"
             aria-modal

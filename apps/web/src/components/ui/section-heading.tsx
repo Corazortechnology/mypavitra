@@ -16,16 +16,19 @@ export function SectionHeading({
   return (
     <div className={`${align === "center" ? "text-center" : ""} ${className}`}>
       {ornament && (
-        <p className="font-devanagari text-saffron/80 text-sm tracking-[0.25em] mb-2" aria-hidden>
+        <p
+          className="mb-2 font-devanagari text-sm tracking-[0.25em] text-saffron/70"
+          aria-hidden
+        >
           ॐ शुभम्
         </p>
       )}
-      <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl text-brown tracking-tight">
+      <h2 className="font-display text-2xl tracking-tight text-brown sm:text-3xl lg:text-4xl">
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`mt-2 text-brown-light text-sm sm:text-base max-w-xl leading-relaxed ${
+          className={`mt-2 max-w-xl text-sm sm:text-base leading-relaxed text-muted ${
             align === "center" ? "mx-auto" : ""
           }`}
         >
@@ -33,8 +36,12 @@ export function SectionHeading({
         </p>
       )}
       {ornament && (
-        <div className={`divider-ornament mt-5 max-w-xs ${align === "center" ? "mx-auto" : ""}`}>
-          <span className="text-gold text-xl animate-diya-flicker inline-block">✦</span>
+        <div
+          className={`divider-ornament mt-5 max-w-xs ${align === "center" ? "mx-auto" : ""}`}
+        >
+          <span className="inline-block text-lg text-gold/70" aria-hidden>
+            ✦
+          </span>
         </div>
       )}
     </div>

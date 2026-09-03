@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { buildLocalizedPath } from "@puja/config";
+import { BRAND, buildLocalizedPath } from "@puja/config";
 import type { CountryConfig } from "@puja/types";
 import { HERO_IMAGE, HERO_IMAGE_ALT } from "@/lib/images";
-import { TempleBackground } from "@/components/ui/temple-background";
-import { FloatingDiyas } from "@/components/ui/floating-diyas";
-import { TempleArchFrame } from "@/components/ui/temple-arch-frame";
+import { RevealText } from "@/components/animation/reveal-text";
+import { duration, ease } from "@/lib/motion";
 
 interface HeroCampaignProps {
   country: CountryConfig;
@@ -21,134 +21,174 @@ interface HeroCampaignProps {
   };
 }
 
-const DEFAULT = {
-  heading: "Everything You Need for Your Daily Puja",
-  subheading:
-    "Authentic puja samagri, brass items, and complete kits — quality you can see, prices you can trust.",
-  ctaText: "Shop Puja Essentials",
+const DEFAULT_CTA = {
+  ctaText: "Explore the collection",
   ctaUrl: "/categories/puja-samagri",
 };
 
-export function HeroCampaign({ country, campaign = DEFAULT }: HeroCampaignProps) {
+const EASE = ease.out;
+
+/**
+ * Cinematic full-viewport hero — brand-first, single composition.
+ * Scroll parallax: desktop only; stillness on mobile / reduced motion.
+ */
+export function HeroCampaign({ country, campaign }: HeroCampaignProps) {
   const prefix = (path: string) => buildLocalizedPath(path, country);
+  const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollMotion, setScrollMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(
+      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    );
+    const sync = () => setScrollMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    scrollMotion ? [0, 64] : [0, 0],
+  );
+  const imageScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    scrollMotion ? [1, 1.06] : [1, 1],
+  );
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    scrollMotion ? [0, 28] : [0, 0],
+  );
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.55],
+    [1, scrollMotion ? 0.4 : 1],
+  );
+
+  const ctaText = campaign?.ctaText ?? DEFAULT_CTA.ctaText;
+  const ctaUrl = campaign?.ctaUrl ?? DEFAULT_CTA.ctaUrl;
+  const support =
+    country.code === "IN"
+      ? "Authentic ritual objects, crafted for daily puja and sacred occasions."
+      : `Authentic Indian ritual objects, delivered to ${country.name}.`;
 
   return (
-    <section className="relative overflow-hidden min-h-[85vh] flex items-center">
-      <TempleBackground variant="hero" />
-      <FloatingDiyas count={8} />
+    <section
+      ref={sectionRef}
+      className="relative isolate min-h-[100svh] overflow-hidden text-ivory"
+      aria-label={`${BRAND.name} — enter the world`}
+    >
+      {/* Atmosphere plane */}
+      <div className="absolute inset-0 hero-atmosphere" aria-hidden />
+      <div className="absolute inset-0 hero-jali opacity-80" aria-hidden />
 
-      <div className="container-main relative z-[2] py-16 md:py-24 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* Soft top light */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_-10%,rgba(212,192,160,0.22),transparent_55%)]"
+        aria-hidden
+      />
+
+      {/* Dominant product visual — full-bleed lower field, not a card */}
+      <motion.div
+        className="absolute inset-x-0 bottom-0 top-[28%] sm:top-[22%] md:top-[18%] pointer-events-none"
+        style={{ y: imageY, scale: imageScale }}
+        aria-hidden
+      >
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto h-full w-full max-w-5xl"
+          initial={reduced ? false : { opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: duration.cinematic, ease: EASE, delay: 0.15 }}
         >
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: "0.5em" }}
-            animate={{ opacity: 1, letterSpacing: "0.35em" }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="font-devanagari text-saffron-light/90 text-sm sm:text-base mb-4 text-shadow-temple"
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_55%_at_50%_55%,rgba(176,141,87,0.28),transparent_70%)]" />
+          <Image
+            src={HERO_IMAGE}
+            alt=""
+            fill
+            priority
+            className="object-contain object-bottom pb-6 sm:pb-10 opacity-90"
+            sizes="100vw"
+            unoptimized
+          />
+          {/* Readable gradient over image base */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1c1a17] via-[#1c1a17]/40 to-transparent" />
+        </motion.div>
+      </motion.div>
+
+      {/* Edge vignette */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(28,26,23,0.55)_100%)]"
+        aria-hidden
+      />
+
+      {/* Editorial content — one composition */}
+      <motion.div
+        className="relative z-10 flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-20 sm:pt-32 md:justify-center md:pb-24 md:pt-24"
+        style={{ y: contentY, opacity: contentOpacity }}
+      >
+        <div className="container-main max-w-3xl">
+          <RevealText
+            as="p"
+            delay={0.15}
+            className="mb-5 text-[0.7rem] font-medium uppercase tracking-[0.42em] text-gold-light/90 sm:mb-6 sm:text-xs"
           >
-            ॐ शुभम् · सत्य · शुद्ध · श्रद्धा
-          </motion.p>
+            {BRAND.name}
+          </RevealText>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-gold/30 text-gold-light text-xs font-medium mb-6">
-            <span className="animate-diya-flicker">🪔</span>
-            {country.code === "IN"
-              ? "India's Trusted Puja Store"
-              : `Delivered to ${country.name}`}
-          </div>
-
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] text-cream leading-[1.12] text-shadow-temple">
-            {campaign.heading}
+          <h1 className="font-display text-[2.75rem] leading-[1.05] tracking-tight text-ivory sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+            <RevealText as="span" delay={0.28} className="block">
+              Tradition lives
+            </RevealText>
+            <RevealText as="span" delay={0.42} className="block">
+              in the details.
+            </RevealText>
           </h1>
-          <p className="font-devanagari text-gold-light/90 text-base mt-3 tracking-wide">
-            पवित्र पूजा · शुद्ध सामग्री · सच्चे मूल्य
-          </p>
 
-          <p className="mt-6 text-base sm:text-lg text-cream/80 max-w-lg leading-relaxed">
-            {campaign.subheading}
-          </p>
+          {/* Visually hidden full alt for the decorative hero image */}
+          <span className="sr-only">{HERO_IMAGE_ALT}</span>
 
-          <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4">
-            <Link
-              href={prefix(campaign.ctaUrl)}
-              className="btn-shine inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-saffron via-saffron-light to-gold text-white font-semibold shadow-xl shadow-saffron/30 hover:shadow-2xl hover:shadow-saffron/40 hover:-translate-y-1 transition-all duration-300 ring-2 ring-gold/20"
-            >
-              {campaign.ctaText}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href={prefix("/categories/puja-kits")}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl border-2 border-gold/40 text-cream font-semibold hover:border-saffron-light hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
-            >
-              View Puja Kits
-            </Link>
-          </div>
+          <RevealText
+            as="p"
+            delay={0.58}
+            className="mt-6 max-w-md text-base leading-relaxed text-ivory/70 sm:mt-7 sm:text-lg"
+          >
+            {support}
+          </RevealText>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-12 flex flex-wrap gap-8 text-sm text-cream/70"
+            className="mt-9 sm:mt-11"
+            initial={reduced ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: duration.slow, delay: reduced ? 0 : 0.75, ease: EASE }}
           >
-            {[
-              { icon: "🪔", text: "Authentic products" },
-              { icon: "🌍", text: "Ships to 9 countries" },
-              { icon: "📿", text: "Hindu & Jain" },
-            ].map((item, i) => (
-              <motion.span
-                key={item.text}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 + i * 0.1 }}
-                className="flex items-center gap-2.5"
-              >
-                <span className="text-lg animate-diya-flicker">{item.icon}</span>
-                {item.text}
-              </motion.span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="relative"
-        >
-          <TempleArchFrame>
-            <div className="relative aspect-[4/3] bg-gradient-to-b from-cream to-ivory">
-              <Image
-                src={HERO_IMAGE}
-                alt={HERO_IMAGE_ALT}
-                fill
-                priority
-                className="object-contain p-8"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                unoptimized
+            <Link
+              href={prefix(ctaUrl)}
+              className="group inline-flex items-center gap-3 border-b border-brass/70 pb-1 text-sm font-medium tracking-wide text-ivory transition-colors duration-300 hover:border-gold-light hover:text-gold-light"
+            >
+              {ctaText}
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brown/60 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-brown/80 to-transparent">
-                <p className="font-display text-cream text-xl">Daily Puja, Done Right</p>
-                <p className="text-cream/75 text-sm mt-1 font-devanagari">दीप · समग्री · पूजा किट</p>
-              </div>
-            </div>
-          </TempleArchFrame>
-
-          <motion.div
-            animate={{ y: [0, -14, 0], rotate: [0, 3, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-6 -right-2 sm:right-2 w-20 h-20 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center text-3xl shadow-2xl shadow-saffron/50 ring-4 ring-gold/30 animate-diya-flicker"
-            aria-hidden
-          >
-            🪔
+            </Link>
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
-      {/* Bottom fade into ivory */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-ivory to-transparent z-[1]" />
+      {/* Soft exit into page ivory */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-ivory to-transparent sm:h-28"
+        aria-hidden
+      />
     </section>
   );
 }

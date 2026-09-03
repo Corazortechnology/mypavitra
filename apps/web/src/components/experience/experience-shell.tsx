@@ -1,16 +1,8 @@
 "use client";
 
-import { FlowerRain, TempleEntryGate } from "./temple-celebrations";
-import { useExperience } from "./experience-provider";
-
-/** Global experience layer — entry gate, flower rain overlay */
+/** Global experience layer — no entry gate, no ambient flower rain.
+ *  Order success can celebrate via sound only (see celebrateOrder).
+ */
 export function ExperienceShell() {
-  const { flowerRainActive, stopFlowerRain } = useExperience();
-
-  return (
-    <>
-      <TempleEntryGate />
-      <FlowerRain active={flowerRainActive} onComplete={stopFlowerRain} />
-    </>
-  );
+  return null;
 }

@@ -2,7 +2,6 @@
 
 import { useState, type ReactNode } from "react";
 import { ShoppingBag, Check } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useExperience } from "@/components/experience/experience-provider";
 import { CartAddedToast } from "@/components/experience/cart-added-toast";
 
@@ -23,29 +22,6 @@ const sizeClasses = {
   lg: "px-8 py-3.5 text-base",
 };
 
-function GoldenBurst({ active }: { active: boolean }) {
-  return (
-    <AnimatePresence>
-      {active &&
-        [...Array(8)].map((_, i) => (
-          <motion.span
-            key={i}
-            className="absolute left-1/2 top-1/2 w-2 h-2 rounded-full bg-gold pointer-events-none"
-            initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-            animate={{
-              x: Math.cos((i / 8) * Math.PI * 2) * 40,
-              y: Math.sin((i / 8) * Math.PI * 2) * 40,
-              opacity: 0,
-              scale: 0,
-            }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
-        ))}
-    </AnimatePresence>
-  );
-}
-
 export function AddToCartButton({
   slug,
   qty = 1,
@@ -60,7 +36,6 @@ export function AddToCartButton({
   const [loading, setLoading] = useState(false);
   const [added, setAdded] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [burst, setBurst] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function handleClick() {
@@ -80,11 +55,9 @@ export function AddToCartButton({
       }
 
       setAdded(true);
-      setBurst(true);
       setShowToast(true);
       playChime();
 
-      setTimeout(() => setBurst(false), 700);
       setTimeout(() => setAdded(false), 2000);
       setTimeout(() => setShowToast(false), 2800);
     } catch (err) {
@@ -98,19 +71,15 @@ export function AddToCartButton({
     <>
       <CartAddedToast show={showToast} />
       <div className={`relative ${className}`}>
-        <GoldenBurst active={burst} />
-        <motion.button
+        <button
           type="button"
           onClick={handleClick}
           disabled={disabled || loading}
-          whileTap={{ scale: 0.97 }}
-          animate={added ? { scale: [1, 1.04, 1] } : {}}
-          transition={{ duration: 0.35 }}
-          className={`btn-shine relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-300 ${
+          className={`relative inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-[background-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-in-out)] active:scale-[0.98] motion-reduce:active:scale-100 ${
             added
-              ? "bg-gradient-to-r from-gold to-saffron text-white shadow-lg shadow-gold/30"
-              : "bg-gradient-to-r from-saffron to-saffron-light text-white shadow-lg shadow-saffron/25 hover:shadow-xl hover:shadow-saffron/30 hover:-translate-y-0.5"
-          } disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 ${sizeClasses[size]} ${
+              ? "bg-brass text-white shadow-md"
+              : "bg-saffron text-white shadow-md hover:bg-saffron-light"
+          } disabled:cursor-not-allowed disabled:opacity-50 ${sizeClasses[size]} ${
             fullWidth ? "w-full" : ""
           }`}
         >
@@ -118,14 +87,14 @@ export function AddToCartButton({
             "Adding…"
           ) : added ? (
             <>
-              <Check className="w-4 h-4" /> Added · शुभम्
+              <Check className="h-4 w-4" /> Added
             </>
           ) : (
             <>
-              <ShoppingBag className="w-4 h-4" /> {children}
+              <ShoppingBag className="h-4 w-4" /> {children}
             </>
           )}
-        </motion.button>
+        </button>
         {error && (
           <p className="mt-2 text-xs text-red-600" role="alert">
             {error}
