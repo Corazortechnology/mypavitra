@@ -1,13 +1,15 @@
 import Link from "next/link";
 import {
   getBestSellers,
-  getActiveCampaign,
   BUNDLES,
   GUIDES,
 } from "@puja/catalog";
 import { getCountryConfig } from "@/lib/country";
-import { HeroCampaign } from "@/components/home/hero-campaign";
-import { PopularCategories } from "@/components/home/popular-categories";
+import { ChapterLight } from "@/components/home/film/chapter-light";
+import { ChapterRitual } from "@/components/home/film/chapter-ritual";
+import { ChapterCraft } from "@/components/home/film/chapter-craft";
+import { ChapterTradition } from "@/components/home/film/chapter-tradition";
+import { ChapterWorld } from "@/components/home/film/chapter-world";
 import { ShopByPurpose } from "@/components/home/shop-by-purpose";
 import { TrustSection } from "@/components/home/trust-section";
 import { ProductGrid } from "@/components/commerce/product-grid";
@@ -22,7 +24,6 @@ import { ArrowRight, BookOpen } from "lucide-react";
 export default async function HomePage() {
   const country = await getCountryConfig();
   const prefix = (path: string) => buildLocalizedPath(path, country);
-  const campaign = getActiveCampaign();
   const bestSellers = getBestSellers(8).filter(
     (p) => p.prices[country.code] !== undefined
   );
@@ -31,23 +32,16 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroCampaign
-        country={country}
-        campaign={
-          campaign
-            ? {
-                heading: campaign.heading,
-                subheading: campaign.subheading,
-                ctaText: campaign.ctaText,
-                ctaUrl: campaign.ctaUrl,
-              }
-            : undefined
-        }
-      />
-      <PopularCategories country={country} />
+      {/* ───────────────────────── FILM BLOCK A — continuous, dark ───────────────────────── */}
+      {/* Chapter 01 → 02 → 03 flow into one another via shared gold/brass material. */}
+      <ChapterLight />
+      <ChapterRitual />
+      <ChapterCraft />
 
+      {/* ───────────────────────── REST — commerce, ivory ───────────────────────── */}
+      {/* Stillness after the transformation; product discovery up front. */}
       {bestSellers.length > 0 && (
-        <TempleSection variant="subtle" className="py-14 sm:py-16">
+        <TempleSection variant="subtle" className="py-16 sm:py-20">
           <div className="container-main">
             <FadeIn direction="up" className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
               <SectionHeading
@@ -66,7 +60,7 @@ export default async function HomePage() {
         </TempleSection>
       )}
 
-      <TempleSection variant="section" className="py-14 sm:py-16 border-y border-gold/10">
+      <TempleSection variant="section" className="py-16 sm:py-20 border-y border-gold/10">
         <div className="container-main">
           <FadeIn direction="up" className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
             <SectionHeading
@@ -88,6 +82,12 @@ export default async function HomePage() {
         </div>
       </TempleSection>
 
+      {/* ───────────────────────── FILM BLOCK B — continuous, dark ───────────────────────── */}
+      {/* Chapter 04 (horizontal worlds) → 05 (out to the world). */}
+      <ChapterTradition country={country} />
+      <ChapterWorld />
+
+      {/* ───────────────────────── OUTRO — commerce, ivory ───────────────────────── */}
       <ShopByPurpose country={country} />
 
       {featuredGuides.length > 0 && (

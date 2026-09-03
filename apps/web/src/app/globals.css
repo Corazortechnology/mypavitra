@@ -92,7 +92,9 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Native smooth-scroll fights GSAP ScrollTrigger scrubbing — keep it off.
+       In-page anchor links still work; the scroll-film needs 1:1 mapping. */
+    scroll-behavior: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
