@@ -8,6 +8,8 @@
  *   .w-earth  — planet arc + abstract landmasses
  *   .w-points — destination glows + travel arcs
  *   .w-room   — the home niche + diya (the origin)
+ *
+ * `idPrefix` keeps gradient IDs unique across the desktop + mobile instances.
  */
 const STARS = [
   [220, 360], [420, 240], [700, 300], [980, 200], [1280, 260], [1560, 360],
@@ -23,42 +25,51 @@ const POINTS = [
   { x: 900, y: 1120, r: 5, o: 0.5 },
 ] as const;
 
-export function WorldArt() {
+export function WorldArt({
+  idPrefix = "w",
+  revealed = false,
+}: {
+  idPrefix?: string;
+  /** Static view (mobile): show the stars/earth/points instead of only the home. */
+  revealed?: boolean;
+}) {
+  const p = idPrefix;
+  const shown = revealed ? 1 : 0;
   return (
     <>
       <defs>
-        <radialGradient id="w-sky" cx="50%" cy="30%" r="80%">
+        <radialGradient id={`${p}-sky`} cx="50%" cy="30%" r="80%">
           <stop offset="0%" stopColor="#241d2e" />
           <stop offset="60%" stopColor="#181521" />
           <stop offset="100%" stopColor="#0e0c14" />
         </radialGradient>
-        <radialGradient id="w-globe" cx="42%" cy="30%" r="75%">
+        <radialGradient id={`${p}-globe`} cx="42%" cy="30%" r="75%">
           <stop offset="0%" stopColor="#3a3350" />
           <stop offset="55%" stopColor="#241f36" />
           <stop offset="100%" stopColor="#12101c" />
         </radialGradient>
-        <radialGradient id="w-atmo" cx="50%" cy="50%" r="50%">
+        <radialGradient id={`${p}-atmo`} cx="50%" cy="50%" r="50%">
           <stop offset="88%" stopColor="#8fb4ff" stopOpacity="0" />
           <stop offset="100%" stopColor="#8fb4ff" stopOpacity="0.35" />
         </radialGradient>
-        <radialGradient id="w-diyaglow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={`${p}-diyaglow`} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#ffcf7a" stopOpacity="0.95" />
           <stop offset="100%" stopColor="#ffcf7a" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      <rect x="0" y="0" width="2000" height="2000" fill="url(#w-sky)" />
+      <rect x="0" y="0" width="2000" height="2000" fill={`url(#${p}-sky)`} />
 
-      <g className="w-stars" fill="#fff" opacity="0">
+      <g className="w-stars" fill="#fff" opacity={shown}>
         {STARS.map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 2.6 : 1.6} opacity={0.5 + (i % 3) * 0.15} />
         ))}
       </g>
 
       {/* Earth */}
-      <g className="w-earth" opacity="0">
-        <circle cx="1000" cy="2600" r="1860" fill="url(#w-atmo)" />
-        <circle cx="1000" cy="2600" r="1800" fill="url(#w-globe)" />
+      <g className="w-earth" opacity={shown}>
+        <circle cx="1000" cy="2600" r="1860" fill={`url(#${p}-atmo)`} />
+        <circle cx="1000" cy="2600" r="1800" fill={`url(#${p}-globe)`} />
         {/* abstract landmasses */}
         <g fill="#4a6b4e" fillOpacity="0.55">
           <path d="M760 900 C 900 840 1080 860 1160 930 C 1120 1010 980 1040 880 1010 C 800 986 740 950 760 900 Z" />
@@ -68,24 +79,24 @@ export function WorldArt() {
       </g>
 
       {/* Destinations + travel arcs */}
-      <g className="w-points" opacity="0">
+      <g className="w-points" opacity={shown}>
         <g fill="none" stroke="#ffcf7a" strokeOpacity="0.4" strokeWidth="2.5">
           <path d="M1000 786 Q 860 660 720 900" />
           <path d="M1000 786 Q 1160 640 1300 872" />
           <path d="M1000 786 Q 720 720 540 1040" />
           <path d="M1000 786 Q 1300 700 1520 1020" />
         </g>
-        {POINTS.map((p, i) => (
+        {POINTS.map((pt, i) => (
           <g key={i}>
-            <circle cx={p.x} cy={p.y} r={p.r * 3} fill="url(#w-diyaglow)" opacity={p.o * 0.6} />
-            <circle cx={p.x} cy={p.y} r={p.r} fill="#ffe0a0" opacity={p.o} />
+            <circle cx={pt.x} cy={pt.y} r={pt.r * 3} fill={`url(#${p}-diyaglow)`} opacity={pt.o * 0.6} />
+            <circle cx={pt.x} cy={pt.y} r={pt.r} fill="#ffe0a0" opacity={pt.o} />
           </g>
         ))}
       </g>
 
       {/* Home niche (origin) */}
       <g className="w-room">
-        <circle cx="1000" cy="812" r="120" fill="url(#w-diyaglow)" />
+        <circle cx="1000" cy="812" r="120" fill={`url(#${p}-diyaglow)`} />
         {/* mandir arch */}
         <path
           d="M936 858 L936 812 Q936 752 1000 752 Q1064 752 1064 812 L1064 858 Z"

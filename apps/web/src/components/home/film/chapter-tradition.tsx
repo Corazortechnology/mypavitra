@@ -69,7 +69,7 @@ export function ChapterTradition({ country }: ChapterTraditionProps) {
                 className="flex items-center gap-4 rounded-xl bg-white/[0.04] p-4 ring-1 ring-white/10"
               >
                 <span className="h-20 w-20 flex-shrink-0">
-                  <CategoryObject kind={p.kind} />
+                  <CategoryObject kind={p.kind} idPrefix={`com-${p.slug}`} />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block font-display text-lg">{p.name}</span>
@@ -114,7 +114,7 @@ export function ChapterTradition({ country }: ChapterTraditionProps) {
               </span>
 
               <div className="trad-object relative z-10 h-[52vh] w-[52vh] max-w-[80vw]">
-                <CategoryObject kind={p.kind} />
+                <CategoryObject kind={p.kind} idPrefix={`cod-${p.slug}`} />
               </div>
 
               <div className="absolute bottom-[14vh] left-8 right-8 z-20 sm:left-16 sm:right-16">

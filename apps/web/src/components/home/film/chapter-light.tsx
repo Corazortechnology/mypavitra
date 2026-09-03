@@ -54,7 +54,7 @@ export function ChapterLight() {
       mobileFallback={
         <div className="hero-atmosphere relative flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 text-center">
           <svg viewBox="480 300 640 900" className="h-[62vh] w-auto" aria-hidden>
-            <DiyaArt />
+            <DiyaArt idPrefix="dm" />
           </svg>
           <p className="mt-6 max-w-xs font-display text-2xl leading-snug text-ivory">
             Traditions begin with a flame.

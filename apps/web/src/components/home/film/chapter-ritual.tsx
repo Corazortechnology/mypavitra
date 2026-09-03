@@ -77,7 +77,7 @@ export function ChapterRitual() {
       mobileFallback={
         <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#1c1a17] px-6 text-center">
           <svg viewBox="120 300 1360 640" className="w-full" aria-hidden>
-            <RitualArt />
+            <RitualArt idPrefix="rm" />
           </svg>
           <p className="mt-6 max-w-xs font-display text-2xl leading-snug text-ivory">
             Everything you need. In one place.

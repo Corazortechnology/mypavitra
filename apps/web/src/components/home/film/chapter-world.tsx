@@ -46,8 +46,8 @@ export function ChapterWorld() {
       }}
       mobileFallback={
         <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#0e0c14] px-6 text-center">
-          <svg viewBox="300 300 1400 1200" className="w-full" aria-hidden>
-            <WorldArt />
+          <svg viewBox="120 260 1760 1400" className="w-full" aria-hidden>
+            <WorldArt idPrefix="wm" revealed />
           </svg>
           <p className="mt-6 max-w-xs font-display text-2xl leading-snug text-ivory">
             Wherever life takes you,

@@ -55,8 +55,8 @@ export function ChapterCraft() {
       }}
       mobileFallback={
         <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#5c3f18] px-6 text-center">
-          <svg viewBox="500 220 1000 760" className="w-full" aria-hidden>
-            <MaterialArt />
+          <svg viewBox="360 120 1280 920" className="w-full" aria-hidden>
+            <MaterialArt idPrefix="mm" revealed />
           </svg>
           <p className="mt-6 max-w-sm font-display text-2xl leading-snug text-ivory">
             Crafted in materials that outlive generations.
