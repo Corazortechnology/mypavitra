@@ -1,24 +1,14 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
-import { duration, ease } from "@/lib/motion";
 
-/** Soft route dissolve — opacity only, never blocks navigation feel */
+/**
+ * Route wrapper.
+ *
+ * NOTE: this intentionally does NOT animate opacity from 0. A Framer
+ * `initial={{ opacity: 0 }}` wrapper here renders the ENTIRE page invisible in
+ * the SSR HTML until hydration runs — on a heavy, GSAP-driven homepage that
+ * reads as "empty content" on cold loads. Content must paint immediately;
+ * the scroll-film supplies all the motion.
+ */
 export default function Template({ children }: { children: ReactNode }) {
-  const reduced = useReducedMotion();
-
-  if (reduced) {
-    return <>{children}</>;
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: duration.medium, ease: ease.inOut }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <>{children}</>;
 }

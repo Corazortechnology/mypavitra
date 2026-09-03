@@ -17,7 +17,7 @@ export function ChapterLight() {
   return (
     <PinnedScene
       id="chapter-light"
-      scroll="+=260%"
+      scroll="+=200%"
       refreshPriority={1}
       className="bg-[#1c1a17]"
       build={({ tl }) => {
@@ -71,7 +71,7 @@ export function ChapterLight() {
         </div>
 
         {/* Opening caption */}
-        <ChapterCaption index="01" kicker="The Light" placement="bottom-center" tone="light">
+        <ChapterCaption index="01" kicker="The Light" placement="bottom-center" tone="light" visibleByDefault>
           Traditions begin with a flame.
         </ChapterCaption>
 

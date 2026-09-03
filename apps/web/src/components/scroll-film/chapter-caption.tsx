@@ -18,6 +18,12 @@ interface ChapterCaptionProps {
   /** Class hook the scene timeline drives (opacity / y / clip). */
   captionClassName?: string;
   tone?: "light" | "dark";
+  /**
+   * Render visible at rest instead of opacity-0. Use for the FIRST caption of
+   * a scene so the screen is never textless before GSAP runs / if JS is slow.
+   * The timeline can still fade it out on scroll.
+   */
+  visibleByDefault?: boolean;
 }
 
 const PLACEMENT: Record<Placement, string> = {
@@ -42,6 +48,7 @@ export function ChapterCaption({
   className = "",
   captionClassName = "film-caption",
   tone = "light",
+  visibleByDefault = false,
 }: ChapterCaptionProps) {
   const color = tone === "light" ? "text-ivory" : "text-brown";
   const sub = tone === "light" ? "text-gold-light/80" : "text-brass";
@@ -50,7 +57,7 @@ export function ChapterCaption({
     <div
       className={`pointer-events-none absolute z-[60] flex px-6 sm:px-10 ${PLACEMENT[placement]} ${className}`}
     >
-      <div className={`${captionClassName} max-w-2xl opacity-0`}>
+      <div className={`${captionClassName} max-w-2xl ${visibleByDefault ? "opacity-100" : "opacity-0"}`}>
         {(index || kicker) && (
           <p
             className={`mb-3 flex items-center gap-3 text-[0.6rem] font-medium uppercase tracking-[0.4em] ${sub}`}

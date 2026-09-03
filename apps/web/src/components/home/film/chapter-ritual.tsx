@@ -19,7 +19,7 @@ export function ChapterRitual() {
   return (
     <PinnedScene
       id="chapter-ritual"
-      scroll="+=320%"
+      scroll="+=240%"
       refreshPriority={2}
       className="bg-[#1c1a17]"
       build={({ tl }) => {

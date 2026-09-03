@@ -18,7 +18,7 @@ export function ChapterWorld() {
   return (
     <PinnedScene
       id="chapter-world"
-      scroll="+=300%"
+      scroll="+=220%"
       refreshPriority={5}
       className="bg-[#0e0c14]"
       build={({ tl }) => {

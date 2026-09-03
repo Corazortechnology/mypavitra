@@ -37,7 +37,7 @@ export function ChapterTradition({ country }: ChapterTraditionProps) {
   return (
     <PinnedScene
       id="chapter-tradition"
-      scroll="+=520%"
+      scroll="+=460%"
       scrub={0.5}
       refreshPriority={4}
       className="bg-[#1c1a17]"

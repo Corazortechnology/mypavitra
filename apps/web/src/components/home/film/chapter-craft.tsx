@@ -20,7 +20,7 @@ export function ChapterCraft() {
   return (
     <PinnedScene
       id="chapter-craft"
-      scroll="+=260%"
+      scroll="+=200%"
       refreshPriority={3}
       className="bg-[#5c3f18]"
       build={({ tl }) => {
