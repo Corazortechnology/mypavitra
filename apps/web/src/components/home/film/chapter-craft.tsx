@@ -54,12 +54,17 @@ export function ChapterCraft() {
         tl.fromTo(".mat-exit", { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.in" }, 0.88);
       }}
       mobileFallback={
-        <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#5c3f18] px-6 text-center">
-          <svg viewBox="360 120 1280 920" className="w-full" aria-hidden>
+        <div className="relative flex min-h-[80svh] flex-col items-center justify-center gap-7 bg-[#5c3f18] px-6 py-20 text-center">
+          <p className="text-[0.6rem] font-medium uppercase tracking-[0.4em] text-gold-light/90">
+            03 — The Craft
+          </p>
+          <svg viewBox="620 300 760 720" className="w-full max-w-sm" aria-hidden>
             <MaterialArt idPrefix="mm" revealed />
           </svg>
-          <p className="mt-6 max-w-sm font-display text-2xl leading-snug text-ivory">
-            Crafted in materials that outlive generations.
+          <p className="max-w-sm font-display text-2xl leading-snug text-ivory">
+            Crafted in materials
+            <br />
+            <span className="text-gold-light">that outlive generations.</span>
           </p>
         </div>
       }

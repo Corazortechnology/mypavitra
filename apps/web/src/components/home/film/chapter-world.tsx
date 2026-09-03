@@ -45,11 +45,14 @@ export function ChapterWorld() {
         tl.fromTo(".w-exit", { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.in" }, 0.9);
       }}
       mobileFallback={
-        <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#0e0c14] px-6 text-center">
-          <svg viewBox="120 260 1760 1400" className="w-full" aria-hidden>
+        <div className="relative flex min-h-[80svh] flex-col items-center justify-center gap-7 bg-[#0e0c14] px-6 py-20 text-center">
+          <p className="text-[0.6rem] font-medium uppercase tracking-[0.4em] text-gold-light/80">
+            05 — The World
+          </p>
+          <svg viewBox="240 300 1520 1220" className="w-full max-w-md" aria-hidden>
             <WorldArt idPrefix="wm" revealed />
           </svg>
-          <p className="mt-6 max-w-xs font-display text-2xl leading-snug text-ivory">
+          <p className="max-w-xs font-display text-2xl leading-snug text-ivory">
             Wherever life takes you,
             <br />
             <span className="text-gold-light">traditions travel with you.</span>

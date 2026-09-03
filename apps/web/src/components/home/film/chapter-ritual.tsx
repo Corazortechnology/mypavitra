@@ -75,12 +75,17 @@ export function ChapterRitual() {
         tl.to(".cap-3", { opacity: 0, duration: 0.1 }, 0.9);
       }}
       mobileFallback={
-        <div className="relative flex h-[100svh] flex-col items-center justify-center bg-[#1c1a17] px-6 text-center">
-          <svg viewBox="120 300 1360 640" className="w-full" aria-hidden>
+        <div className="relative flex min-h-[80svh] flex-col items-center justify-center gap-7 bg-[#1c1a17] px-6 py-20 text-center">
+          <p className="text-[0.6rem] font-medium uppercase tracking-[0.4em] text-gold-light/80">
+            02 — The Ritual
+          </p>
+          <svg viewBox="300 280 1000 620" className="w-full max-w-md" aria-hidden>
             <RitualArt idPrefix="rm" />
           </svg>
-          <p className="mt-6 max-w-xs font-display text-2xl leading-snug text-ivory">
-            Everything you need. In one place.
+          <p className="max-w-xs font-display text-2xl leading-snug text-ivory">
+            Every object has a purpose.
+            <br />
+            <span className="text-gold-light">Everything you need, in one place.</span>
           </p>
         </div>
       }
